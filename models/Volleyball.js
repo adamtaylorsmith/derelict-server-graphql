@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const VolleyballSchema = new mongoose.Schema({
     teamname: {
-        type: Integer,
+        type: String,
     },
     // teamrole: {
     //     type: Integer,

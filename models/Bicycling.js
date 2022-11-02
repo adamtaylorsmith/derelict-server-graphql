@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const ArcherySchema = new mongoose.Schema({
+const BicyclingSchema = new mongoose.Schema({
     teamname: {
         type: String,
     },
@@ -18,4 +18,4 @@ const ArcherySchema = new mongoose.Schema({
     },
 });
 
-module.exports = mongoose.model('Archery', ArcherySchema);
+module.exports = mongoose.model('Bicycling', BicyclingSchema);
