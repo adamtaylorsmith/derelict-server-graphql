@@ -16,6 +16,9 @@ const BicyclingSchema = new mongoose.Schema({
     finish: {
         type: Date,
     },
+    place: {
+        type: Date,
+    },
 });
 
 module.exports = mongoose.model('Bicycling', BicyclingSchema);

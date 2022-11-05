@@ -60,6 +60,7 @@ const BicyclingType = new GraphQLObjectType({
     score: { type: GraphQLInt },
     start: { type: GraphQLInt },
     finish: { type: GraphQLInt },
+    place: { type: GraphQLInt },
   }),
 });
 const BowlingType = new GraphQLObjectType({
@@ -70,6 +71,7 @@ const BowlingType = new GraphQLObjectType({
     teamrole: { type: GraphQLString },
     pins: { type: GraphQLInt },
     teamscore: { type: GraphQLInt },
+    
   }),
 });
 const CornholeType = new GraphQLObjectType({
@@ -130,6 +132,7 @@ const SprintType = new GraphQLObjectType({
     teamscore: { type: GraphQLInt },
     start: { type: GraphQLInt },
     finish: { type: GraphQLInt },
+    place: { type: GraphQLInt },
   }),
 });
 const TeamInfoType = new GraphQLObjectType({
