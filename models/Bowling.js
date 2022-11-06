@@ -13,6 +13,9 @@ const BowlingSchema = new mongoose.Schema({
     teamscore: {
         type: Number,
     },
+    teamplace : {
+        type: Number,
+    }
 });
 
 module.exports = mongoose.model('Bowling', BowlingSchema);

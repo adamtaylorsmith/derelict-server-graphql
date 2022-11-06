@@ -12,6 +12,9 @@ const DiscGolfSchema = new mongoose.Schema({
     },
     roundscore: {
         type: Number
+    },
+    place : {
+        type: Number,
     }
 });
 

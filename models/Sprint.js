@@ -16,6 +16,9 @@ const SprintSchema = new mongoose.Schema({
     finish: {
         type: Date,
     },
+    teamplace : {
+        type: Number,
+    }
 });
 
 module.exports = mongoose.model('Sprint', SprintSchema);

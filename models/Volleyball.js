@@ -4,9 +4,6 @@ const VolleyballSchema = new mongoose.Schema({
     teamname: {
         type: String,
     },
-    // teamrole: {
-    //     type: Integer,
-    // },
     teamscore: {
         type: Number,
     },
@@ -28,7 +25,9 @@ const VolleyballSchema = new mongoose.Schema({
     roundsixscore: {
         type: Number,
     },
-
+    teamplace : {
+        type: Number,
+    }
 });
 
 module.exports = mongoose.model('Volleyball', VolleyballSchema);

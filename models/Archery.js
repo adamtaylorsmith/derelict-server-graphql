@@ -40,6 +40,9 @@ const ArcherySchema = new mongoose.Schema({
     arrowten: {
         type: Number,
     },
+    place : {
+        type: Number,
+    }
 });
 
 module.exports = mongoose.model('Archery', ArcherySchema);

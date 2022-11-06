@@ -16,6 +16,12 @@ const BasketballSchema = new mongoose.Schema({
     finish: {
         type: Date,
     },
+    place : {
+        type: Number,
+    },
+    time: {
+        type: String
+    }
 });
 
 module.exports = mongoose.model('Basketball', BasketballSchema);

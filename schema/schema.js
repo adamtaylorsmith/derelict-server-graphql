@@ -38,6 +38,7 @@ const ArcheryType = new GraphQLObjectType({
       arroweight: { type: GraphQLInt },
       arrownine: { type: GraphQLInt },
       arrowten: { type: GraphQLInt },
+      place: { type: GraphQLInt },
     }),
 });
 const BasketballType = new GraphQLObjectType({
@@ -49,6 +50,8 @@ const BasketballType = new GraphQLObjectType({
       score: { type: GraphQLInt },
       start: { type: GraphQLInt },
       finish: { type: GraphQLInt },
+      place: { type: GraphQLInt },
+      time: { type: GraphQLString },
     }),
 });
 const BicyclingType = new GraphQLObjectType({
@@ -71,6 +74,7 @@ const BowlingType = new GraphQLObjectType({
     teamrole: { type: GraphQLString },
     pins: { type: GraphQLInt },
     teamscore: { type: GraphQLInt },
+    teamplace: { type: GraphQLInt },
     
   }),
 });
@@ -87,6 +91,7 @@ const CornholeType = new GraphQLObjectType({
     roundfourscore: { type: GraphQLInt },
     roundfivescore: { type: GraphQLInt },
     roundsixscore: { type: GraphQLInt },
+    place: { type: GraphQLInt },
   }),
 });
 const DiscGolfType = new GraphQLObjectType({
@@ -97,6 +102,7 @@ const DiscGolfType = new GraphQLObjectType({
     teamrole: { type: GraphQLString },
     score: { type: GraphQLInt },
     roundscore: { type: GraphQLInt },
+    place: { type: GraphQLInt },
   }),
 });
 const KayakType = new GraphQLObjectType({
@@ -107,6 +113,7 @@ const KayakType = new GraphQLObjectType({
     teamscore: { type: GraphQLInt },
     start: { type: GraphQLInt },
     finish: { type: GraphQLInt },
+    teamplace: { type: GraphQLInt },
   }),
 });
 const PickleballType = new GraphQLObjectType({
@@ -122,6 +129,7 @@ const PickleballType = new GraphQLObjectType({
     roundfourscore: { type: GraphQLInt },
     roundfivescore: { type: GraphQLInt },
     roundsixscore: { type: GraphQLInt },
+    place: { type: GraphQLInt },
   }),
 });
 const SprintType = new GraphQLObjectType({
@@ -132,7 +140,7 @@ const SprintType = new GraphQLObjectType({
     teamscore: { type: GraphQLInt },
     start: { type: GraphQLInt },
     finish: { type: GraphQLInt },
-    place: { type: GraphQLInt },
+    teamplace: { type: GraphQLInt },
   }),
 });
 const TeamInfoType = new GraphQLObjectType({
@@ -151,13 +159,14 @@ const VolleyballType = new GraphQLObjectType({
   fields: () => ({
     id: { type: GraphQLID },
     teamname: { type: GraphQLString },
-    score: { type: GraphQLInt },
+    teamscore: { type: GraphQLInt },
     roundonescore: { type: GraphQLInt },
     roundtwoscore: { type: GraphQLInt },
     roundthreescore: { type: GraphQLInt },
     roundfourscore: { type: GraphQLInt },
     roundfivescore: { type: GraphQLInt },
     roundsixscore: { type: GraphQLInt },
+    teamplace: { type: GraphQLInt },
   }),
 });
 
@@ -329,6 +338,7 @@ const mutation = new GraphQLObjectType({
         arroweight: { type: GraphQLInt },
         arrownine: { type: GraphQLInt },
         arrowten: { type: GraphQLInt },
+        place: { type: GraphQLInt },
       },
       resolve(parent, args) {
         const archery = new Archery({
@@ -344,7 +354,8 @@ const mutation = new GraphQLObjectType({
           arrowseven: args.arrowseven,
           arroweight: args.arroweight,
           arrownine: args.arrownine,
-          arrowten:args.arrowten,
+          arrowten: args.arrowten,
+          place: args.place
         });
         return archery.save();
       }
@@ -363,6 +374,51 @@ const mutation = new GraphQLObjectType({
     //     return Archery.findByIdAndRemove(args.id);
     //   },
     // },
+    updateArchery: {
+      type: ArcheryType,
+      args: {
+        id: { type: GraphQLNonNull(GraphQLID) },
+        teamname: { type: GraphQLNonNull(GraphQLString) },
+        teamrole: { type: GraphQLNonNull(GraphQLString) },
+        score: { type: GraphQLInt },
+        arrowone: { type: GraphQLInt },
+        arrowtwo: { type: GraphQLInt },
+        arrowthree: { type: GraphQLInt },
+        arrowfour: { type: GraphQLInt },
+        arrowfive: { type: GraphQLInt },
+        arrowsix: { type: GraphQLInt },
+        arrowseven: { type: GraphQLInt },
+        arroweight: { type: GraphQLInt },
+        arrownine: { type: GraphQLInt },
+        arrowten: { type: GraphQLInt },
+        place: { type: GraphQLInt },
+        
+      },
+      resolve(parent, args) {
+        return Archery.findByIdAndUpdate(
+          args.id,
+          {
+            $set: {
+              teamname: args.teamname,
+              teamrole: args.teamrole,
+              score: args.score,
+              arrowone: args.arrowone,
+              arrowtwo: args.arrowtwo,
+              arrowthree: args.arrowthree,
+              arrowfour: args.arrowfour,
+              arrowfive: args.arrowfive,
+              arrowsix: args.arrowsix,
+              arrowseven: args.arrowseven,
+              arroweight: args.arroweight,
+              arrownine: args.arrownine,
+              arrowten: args.arrowten,
+              place: args.place
+            },
+          },
+          { new: true }
+        );
+      },
+    },
     addBasketball: {
       type: BasketballType,
       args: {
@@ -371,6 +427,8 @@ const mutation = new GraphQLObjectType({
         score: { type: GraphQLInt },
         start: { type: GraphQLInt },
         finish: { type: GraphQLInt },
+        place: { type: GraphQLInt },
+        time: { type: GraphQLString },
       },
       resolve(parent, args) {
         const basketball = new Basketball({
@@ -379,9 +437,41 @@ const mutation = new GraphQLObjectType({
           score: args.score,
           start: args.start,
           finish: args.finish,
+          place: args.place,
+          time: args.time
         });
         return basketball.save();
       }
+    },
+    updateBasketball: {
+      type: BasketballType,
+      args: {
+        id: { type: GraphQLNonNull(GraphQLID) },
+        teamname: { type: GraphQLNonNull(GraphQLString) },
+        teamrole: { type: GraphQLNonNull(GraphQLString) },
+        score: { type: GraphQLInt },
+        start: { type: GraphQLInt },
+        finish: { type: GraphQLInt },
+        place: { type: GraphQLInt },
+        time: { type: GraphQLString },
+      },
+      resolve(parent, args) {
+        return Basketball.findByIdAndUpdate(
+          args.id,
+          {
+            $set: {
+              teamname: args.teamname,
+              teamrole: args.teamrole,
+              score: args.score,
+              start: args.start,
+              finish: args.finish,
+              place: args.place,
+              time: args.time
+            },
+          },
+          { new: true }
+        );
+      },
     },
     addBicycling: {
       type: BicyclingType,
@@ -391,6 +481,7 @@ const mutation = new GraphQLObjectType({
         score: { type: GraphQLInt },
         start: { type: GraphQLInt },
         finish: { type: GraphQLInt },
+        place: { type: GraphQLInt },
       },
       resolve(parent, args) {
         const bicycling = new Bicycling({
@@ -399,6 +490,7 @@ const mutation = new GraphQLObjectType({
           score: args.score,
           start: args.start,
           finish: args.finish,
+          place: args.place
         });
         return bicycling.save();
       }
@@ -410,6 +502,7 @@ const mutation = new GraphQLObjectType({
         teamrole: { type: GraphQLNonNull(GraphQLString) },
         pins: { type: GraphQLInt },
         teamscore: { type: GraphQLInt },
+        teamplace: { type: GraphQLInt },
       },
       resolve(parent, args) {
         const bowling = new Bowling({
@@ -417,6 +510,7 @@ const mutation = new GraphQLObjectType({
           teamrole: args.teamrole,
           pins: args.pins,
           teamscore: args.teamscore,
+          teamplace: args.teamplace
         });
         return bowling.save();
       }
@@ -433,6 +527,7 @@ const mutation = new GraphQLObjectType({
         roundfourscore: { type: GraphQLInt },
         roundfivescore: { type: GraphQLInt },
         roundsixscore: { type: GraphQLInt },
+        place: { type: GraphQLInt },
       },
       resolve(parent, args) {
         const cornhole = new Cornhole({
@@ -444,7 +539,8 @@ const mutation = new GraphQLObjectType({
           roundthreescore: args.roundthreescore,
           roundfourscore: args.roundfivescore,
           roundfivescore: args.roundfivescore,
-          roundsixscore: args.roundsixscore
+          roundsixscore: args.roundsixscore,
+          place: args.place
         });
         return cornhole.save();
       }
@@ -456,6 +552,7 @@ const mutation = new GraphQLObjectType({
         teamrole: { type: GraphQLNonNull(GraphQLString) },
         score: { type: GraphQLInt },
         roundscore: { type: GraphQLInt },
+        place: { type: GraphQLInt },
       },
       resolve(parent, args) {
         const discgolf = new DiscGolf({
@@ -463,6 +560,7 @@ const mutation = new GraphQLObjectType({
           teamrole: args.teamrole,
           score: args.score,
           roundscore: args.roundscore,
+          place: args.place
         });
         return discgolf.save();
       }
@@ -474,16 +572,44 @@ const mutation = new GraphQLObjectType({
         teamscore: { type: GraphQLInt },
         start: { type: GraphQLInt },
         finish: { type: GraphQLInt },
+        teamplace: { type: GraphQLInt },
       },
       resolve(parent, args) {
         const kayak = new Kayak({
           teamname: args.teamname,
-          teamscore: args.score,
+          teamscore: args.teamscore,
           start: args.start,
           finish: args.finish,
+          teamplace: args.teamplace
         });
         return kayak.save();
       }
+    },
+    updateKayak: {
+      type: KayakType,
+      args: {
+        id: { type: GraphQLNonNull(GraphQLID) },
+        teamname: { type: GraphQLNonNull(GraphQLString) },
+        teamscore: { type: GraphQLInt },
+        start: { type: GraphQLInt },
+        finish: { type: GraphQLInt },
+        teamplace: { type: GraphQLInt },
+      },
+      resolve(parent, args) {
+        return Basketball.findByIdAndUpdate(
+          args.id,
+          {
+            $set: {
+              teamname: args.teamname,
+              teamscore: args.teamscore,
+              start: args.start,
+              finish: args.finish,
+              teamplace: args.teamplace,
+            },
+          },
+          { new: true }
+        );
+      },
     },
     addPickleball: {
       type: PickleballType,
@@ -497,6 +623,7 @@ const mutation = new GraphQLObjectType({
         roundfourscore: { type: GraphQLInt },
         roundfivescore: { type: GraphQLInt },
         roundsixscore: { type: GraphQLInt },
+        place: { type: GraphQLInt },
       },
       resolve(parent, args) {
         const pickleball = new Pickleball({
@@ -509,6 +636,7 @@ const mutation = new GraphQLObjectType({
           roundfourscore: args.roundfivescore,
           roundfivescore: args.roundfivescore,
           roundsixscore: args.roundsixscore,
+          place: args.place
         });
         return pickleball.save();
       }
@@ -520,16 +648,44 @@ const mutation = new GraphQLObjectType({
         teamscore: { type: GraphQLInt },
         start: { type: GraphQLInt },
         finish: { type: GraphQLInt },
+        teamplace: { type: GraphQLInt },
       },
       resolve(parent, args) {
         const sprint = new Sprint({
           teamname: args.teamname,
-          teamscore: args.score,
+          teamscore: args.teamscore,
           start: args.start,
           finish: args.finish,
+          teamplace: args.teamplace
         });
         return sprint.save();
       }
+    },
+    updateSprint: {
+      type: SprintType,
+      args: {
+        id: { type: GraphQLNonNull(GraphQLID) },
+        teamname: { type: GraphQLNonNull(GraphQLString) },
+        teamscore: { type: GraphQLInt },
+        start: { type: GraphQLInt },
+        finish: { type: GraphQLInt },
+        teamplace: { type: GraphQLInt },
+      },
+      resolve(parent, args) {
+        return Basketball.findByIdAndUpdate(
+          args.id,
+          {
+            $set: {
+              teamname: args.teamname,
+              teamscore: args.teamscore,
+              start: args.start,
+              finish: args.finish,
+              teamplace: args.teamplace,
+            },
+          },
+          { new: true }
+        );
+      },
     },
     addTeamInfo: {
       type: TeamInfoType,
@@ -555,24 +711,26 @@ const mutation = new GraphQLObjectType({
       type: VolleyballType,
       args: {
         teamname: { type: GraphQLNonNull(GraphQLString) },
-        score: { type: GraphQLInt },
+        teamscore: { type: GraphQLInt },
         roundonescore: { type: GraphQLInt },
         roundtwoscore: { type: GraphQLInt },
         roundthreescore: { type: GraphQLInt },
         roundfourscore: { type: GraphQLInt },
         roundfivescore: { type: GraphQLInt },
         roundsixscore: { type: GraphQLInt },
+        teamplace: { type: GraphQLInt },
       },
       resolve(parent, args) {
         const volleyball = new Volleyball({
           teamname: args.teamname,
-          score: args.score,
+          teamscore: args.teamscore,
           roundonescore: args.roundonescore,
           roundtwoscore: args.roundtwoscore,
           roundthreescore: args.roundthreescore,
           roundfourscore: args.roundfivescore,
           roundfivescore: args.roundfivescore,
           roundsixscore: args.roundsixscore,
+          teamplace: args.teamplace
         });
         return volleyball.save();
       }

@@ -28,7 +28,9 @@ const PickleballSchema = new mongoose.Schema({
     roundsixscore: {
         type: Number,
     },
-
+    place : {
+        type: Number,
+    }
 });
 
 module.exports = mongoose.model('Pickleball', PickleballSchema);

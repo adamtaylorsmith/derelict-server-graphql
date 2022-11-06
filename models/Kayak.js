@@ -4,9 +4,6 @@ const KayakSchema = new mongoose.Schema({
     teamname: {
         type: String,
     },
-    // teamrole: {
-    //     type: String,
-    // },
     teamscore: {
         type: Number,
     },
@@ -15,6 +12,9 @@ const KayakSchema = new mongoose.Schema({
     },
     finish: {
         type: Date,
+    },
+    teamplace : {
+        type: Number,
     }
 });
 
