@@ -173,7 +173,7 @@ const VolleyballType = new GraphQLObjectType({
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: {
-    archerys: {
+    archeries: {
       type: new GraphQLList(ArcheryType),
       resolve(parent, args) {
         return Archery.find();
@@ -238,7 +238,7 @@ const RootQuery = new GraphQLObjectType({
         return Cornhole.findById(args.id);
       },
     },
-    discgolfs: {
+    discgolves: {
       type: new GraphQLList(DiscGolfType),
       resolve(parent, args) {
         return DiscGolf.find();
